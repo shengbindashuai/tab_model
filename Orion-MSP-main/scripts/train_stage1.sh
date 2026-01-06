@@ -51,7 +51,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --icl_nhead 4 \
             --ff_factor 2 \
             --norm_first True \
-            --checkpoint_dir /my/stage1/checkpoint/dir \
+            --checkpoint_dir ./stage1/checkpoint/dir \
             --save_temp_every 50 \
             --save_perm_every 1000
 
@@ -98,6 +98,6 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --icl_nhead 4 \
             --ff_factor 2 \
             --norm_first True \
-            --checkpoint_dir /my/stage1/checkpoint/dir \
+            --checkpoint_dir ./stage1/checkpoint/dir \
             --save_temp_every 50 \
             --save_perm_every 1000
