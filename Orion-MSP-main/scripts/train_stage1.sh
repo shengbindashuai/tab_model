@@ -6,7 +6,7 @@
 # Generate prior datasets on the fly
 # ----------------------------------
 
-torchrun --standalone --nproc_per_node=1 /path/to/orion_msp/train/run.py \
+torchrun --standalone --nproc_per_node=1 ../src/orion_msp/train/run.py \
             --wandb_log True \
             --wandb_project Orion-MSP \
             --wandb_name Stage1 \
