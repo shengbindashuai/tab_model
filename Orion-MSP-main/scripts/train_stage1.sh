@@ -7,7 +7,7 @@
 # ----------------------------------
 
 torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-MSP-main/src/orion_msp/train/run.py \
-            --wandb_log True \
+            --wandb_log False \
             --wandb_project Orion-MSP \
             --wandb_name Stage1 \
             --wandb_dir ./wandb/dir \
@@ -59,7 +59,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
 
 # Loading prior data from disk and training
 torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-MSP-main/src/orion_msp/train/run.py \
-            --wandb_log True \
+            --wandb_log False \
             --wandb_project Orion-MSP \
             --wandb_name Stage1 \
             --wandb_dir ./wandb/dir \
