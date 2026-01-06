@@ -144,7 +144,7 @@ class Trainer:
             for p in model.icl_predictor.parameters(): p.requires_grad = False
 
         if self.config.model_compile:
-            model = torch.compile(model,mode="max-autotune")
+            model = torch.compile(model)
             if self.master_process: print("Model compiled.")
 
         if self.ddp:
