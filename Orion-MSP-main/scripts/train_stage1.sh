@@ -6,6 +6,8 @@
 # Generate prior datasets on the fly
 # ----------------------------------
 export TORCH_ELASTIC_ENABLE_TRACEBACK=1
+export TORCHDYNAMO_VERBOSE=1
+export TORCH_LOGS="+dynamo,+inductor"
 
 torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-MSP-main/src/orion_msp/train/run.py \
             --wandb_log False \
