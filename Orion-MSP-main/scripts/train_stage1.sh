@@ -10,7 +10,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --wandb_log True \
             --wandb_project Orion-MSP \
             --wandb_name Stage1 \
-            --wandb_dir /my/wandb/dir \
+            --wandb_dir ./wandb/dir \
             --wandb_mode online \
             --device cuda \
             --dtype float32 \
@@ -62,7 +62,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --wandb_log True \
             --wandb_project Orion-MSP \
             --wandb_name Stage1 \
-            --wandb_dir /my/wandb/dir \
+            --wandb_dir ./wandb/dir \
             --wandb_mode online \
             --device cuda \
             --dtype float32 \
@@ -75,7 +75,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --scheduler cosine_warmup \
             --warmup_proportion 0.02 \
             --gradient_clipping 1.0 \
-            --prior_dir /my/stage1/prior/dir \
+            --prior_dir ./stage1/prior/dir \
             --load_prior_start 0 \
             --delete_after_load False \
             --prior_device cpu \
