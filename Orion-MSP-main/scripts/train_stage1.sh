@@ -112,7 +112,7 @@
 # ----------------------------------
 
 torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-MSP-main/src/orion_msp/train/run.py \
-            --wandb_log True \
+            --wandb_log False \
             --wandb_project TabICL \
             --wandb_name ldm \
             --wandb_dir ./wandb/dir \
@@ -181,7 +181,7 @@ python /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-
 
 # Loading from disk and training
 torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-MSP-main/src/orion_msp/train/run.py \
-            --wandb_log True \
+            --wandb_log False \
             --wandb_project TabICL \
             --wandb_name ldm \
             --wandb_dir ./wandb/dir \
