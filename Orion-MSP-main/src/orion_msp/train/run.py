@@ -143,12 +143,10 @@ class Trainer:
             if self.master_process: print("Model compiled.")
 
         if self.ddp:
-            find_unused = (self.config.row_group_mode != "pma")
             self.model = DDP(
                 model, 
                 device_ids=[self.ddp_local_rank], 
-                broadcast_buffers=False,
-                # find_unused_parameters=find_unused,
+                broadcast_buffers=False
             )
             self.raw_model = self.model.module
         else:
