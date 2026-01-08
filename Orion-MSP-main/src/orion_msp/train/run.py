@@ -86,7 +86,6 @@ class Trainer:
     def configure_wandb(self):
         if self.config.wandb_log and self.master_process:
             import wandb
-            wandb.login(key="2f4b01f1da6026ab2405638e7b9f3c4406ef50e1")
             os.makedirs(self.config.checkpoint_dir or ".", exist_ok=True)
             id_path = os.path.join(self.config.checkpoint_dir or ".", "wand_id.txt")
             if self.config.wandb_id is None and os.path.exists(id_path):
