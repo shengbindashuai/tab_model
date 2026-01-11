@@ -17,6 +17,7 @@ from torch.distributed import init_process_group, destroy_process_group
 
 from tqdm import tqdm
 import warnings
+
 warnings.filterwarnings("ignore", message=".*nested tensors is in prototype stage.*", category=UserWarning)
 
 from orion_msp.model.orion_msp import OrionMSP
@@ -28,6 +29,7 @@ from orion_msp.train.train_config import build_parser
 
 class Timer:
     def __enter__(self): self.start_time = timeit.default_timer(); return self
+
     def __exit__(self, exc_type, exc_val, exc_tb): self.elapsed = timeit.default_timer() - self.start_time; return False
 
 
@@ -39,6 +41,7 @@ def ddp_cleanup(func):
         finally:
             if self.ddp:
                 destroy_process_group()
+
     return wrapper
 
 
@@ -149,8 +152,8 @@ class Trainer:
         if self.ddp:
             find_unused = (self.config.row_group_mode != "pma")
             self.model = DDP(
-                model, 
-                device_ids=[self.ddp_local_rank], 
+                model,
+                device_ids=[self.ddp_local_rank],
                 broadcast_buffers=False,
                 find_unused_parameters=find_unused,
             )
@@ -206,7 +209,8 @@ class Trainer:
 
     def configure_optimizer(self):
         from torch import optim
-        self.optimizer = optim.AdamW(self.raw_model.parameters(), lr=self.config.lr, weight_decay=self.config.weight_decay)
+        self.optimizer = optim.AdamW(self.raw_model.parameters(), lr=self.config.lr,
+                                     weight_decay=self.config.weight_decay)
         self.scheduler = get_scheduler(config=self.config, optimizer=self.optimizer)
 
     def configure_amp(self):
@@ -271,8 +275,10 @@ class Trainer:
         temp.sort(key=lambda x: x[0])
         to_delete = len(temp) - limit
         for _, fn in temp[:max(0, to_delete)]:
-            try: os.remove(os.path.join(ckpt_dir, fn))
-            except Exception as e: print(f"Failed to remove {fn}: {e}")
+            try:
+                os.remove(os.path.join(ckpt_dir, fn))
+            except Exception as e:
+                print(f"Failed to remove {fn}: {e}")
 
     @ddp_cleanup
     def train(self):
@@ -346,17 +352,17 @@ class Trainer:
             micro_results = {"ce": scaled_loss.item(), "accuracy": (pred.argmax(dim=1) == true).float().mean().item() / num_micro_batches}
         return micro_results
         """
-    
+
         micro_X, micro_y, micro_d, micro_seq_len, micro_train_size = micro_batch
         seq_len, train_size = self.validate_micro_batch(micro_seq_len, micro_train_size)
         micro_X, micro_y = self.align_micro_batch(micro_X, micro_y, micro_d, seq_len)
-        
+
         micro_X = micro_X.to(self.config.device)
         micro_y = micro_y.to(self.config.device)
         micro_d = micro_d.to(self.config.device)
 
         y_train = micro_y[:, :train_size]
-        y_test  = micro_y[:, train_size:]
+        y_test = micro_y[:, train_size:]
 
         # early exit if nothing to predict
         if y_test.numel() == 0:
@@ -368,8 +374,8 @@ class Trainer:
         with self.amp_ctx:
             logits = self.model(micro_X, y_train, micro_d)  # (B, Ttest, C)
             B, T, C = logits.shape
-            pred  = logits.reshape(-1, C)
-            true  = y_test.reshape(-1).long()
+            pred = logits.reshape(-1, C)
+            true = y_test.reshape(-1).long()
 
             # drop any labels outside [0, C-1] (corrupt/padded labels)
             valid = (true >= 0) & (true < C)
@@ -384,8 +390,7 @@ class Trainer:
         # if loss blew up, abort this micro and let caller skip the step
         if not torch.isfinite(loss):
             raise FloatingPointError("non-finite loss")
-            
-        
+
         scaled_loss = loss / num_micro_batches
         self.scaler.scale(scaled_loss).backward()
 
@@ -396,13 +401,12 @@ class Trainer:
             }
         return micro_results
 
-
     def run_batch(self, batch):
         self.model.train()
         self.optimizer.zero_grad(set_to_none=True)
 
         batch = [t.to_padded_tensor(padding=0.0) if t.is_nested else t for t in batch]
-        
+
         """
         num_micro_batches = math.ceil(self.config.batch_size / self.config.micro_batch_size)
         micro_batches = [torch.split(t, self.config.micro_batch_size, dim=0) for t in batch]
@@ -427,7 +431,7 @@ class Trainer:
             return {"ce": 0.0, "accuracy": 0.0}
 
         micro_batches = valid_micros
-        
+
         results = {"ce": 0.0, "accuracy": 0.0}
         failed = 0
         for i, micro in enumerate(micro_batches):
@@ -435,15 +439,18 @@ class Trainer:
                 res = self.run_micro_batch(micro, i, num_micro_batches)
                 for k, v in res.items(): results[k] += v
             except torch.cuda.OutOfMemoryError:
-                print(f"OOM in micro-batch {i+1}/{num_micro_batches} at step {self.curr_step}. Skipping.")
-                torch.cuda.empty_cache(); failed += 1; continue
+                print(f"OOM in micro-batch {i + 1}/{num_micro_batches} at step {self.curr_step}. Skipping.")
+                torch.cuda.empty_cache();
+                failed += 1;
+                continue
             except FloatingPointError as e:
-                print(f"Non-finite loss in micro-batch {i+1}/{num_micro_batches} at step {self.curr_step}. Skipping.")
-                failed += 1; continue
+                print(f"Non-finite loss in micro-batch {i + 1}/{num_micro_batches} at step {self.curr_step}. Skipping.")
+                failed += 1;
+                continue
 
         if failed / max(1, len(micro_batches)) > 0.1:
             raise RuntimeError("Too many failed micro-batches. Reduce memory usage or check data quality.")
-        
+
         if self.config.gradient_clipping > 0:
             self.scaler.unscale_(self.optimizer)
             total_norm = nn.utils.clip_grad_norm_(self.model.parameters(), self.config.gradient_clipping)
@@ -465,7 +472,46 @@ class Trainer:
 
 
 if __name__ == "__main__":
+    import sys
+
+
+    def _normalize_argv(argv: list[str]) -> list[str]:
+        """Normalize common copy/paste and launcher quirks in CLI flags.
+
+        - Converts Unicode dashes (–, —, −) to ASCII '-' and ensures long options
+          start with '--'.
+        - Converts single-dash long options like '-row_scales' to '--row_scales'.
+        """
+
+        unicode_dash_to_ascii = {
+            "–": "-",  # en dash
+            "—": "-",  # em dash
+            "−": "-",  # minus sign
+        }
+
+        out: list[str] = []
+        for arg in argv:
+            if not arg:
+                out.append(arg)
+                continue
+
+            # Replace leading unicode dashes with ASCII '-'
+            first = arg[0]
+            if first in unicode_dash_to_ascii:
+                arg = unicode_dash_to_ascii[first] + arg[1:]
+
+            # Promote single-dash long options to double-dash (avoid touching
+            # short options like '-h' and numeric negatives like '-1').
+            if arg.startswith("-") and not arg.startswith("--"):
+                if len(arg) > 2 and arg[1].isalpha():
+                    arg = "--" + arg[1:]
+
+            out.append(arg)
+        return out
+
+
     parser = build_parser()
+    sys.argv = _normalize_argv(sys.argv)
     cfg = parser.parse_args()
     trainer = Trainer(cfg)
     trainer.train()

@@ -65,13 +65,12 @@ def build_parser():
     parser.add_argument("--cosine_lr_end", type=float, default=0.0)
     parser.add_argument("--poly_decay_lr_end", type=float, default=1e-7)
     parser.add_argument("--poly_decay_power", type=float, default=1.0)
-    
+
     ##### ADDED FOR STABILITY #######
     parser.add_argument("--ignore_index", type=int, default=-100,
-                    help="Label value to ignore in CE/masked tokens.")
+                        help="Label value to ignore in CE/masked tokens.")
     #################################
-    
-    
+
     # Prior data
     parser.add_argument("--prior_dir", type=str, default=None)
     parser.add_argument("--load_prior_start", type=int, default=0)
@@ -108,11 +107,31 @@ def build_parser():
     parser.add_argument("--row_rope_base", type=float, default=100000)
     parser.add_argument("--freeze_row", default=False, type=str2bool)
     parser.add_argument("--row_num_global", type=int, default=2)
-    parser.add_argument("--row_scales", type=int_list, default=[1, 4, 8])
-    parser.add_argument("--row_window", type=int, default=4)
-    parser.add_argument("--row_num_random", type=int, default=0)
+    parser.add_argument(
+        "--row_scales",
+        "--row-scales",
+        "--row.scales",
+        type=int_list,
+        default=[1, 4, 8],
+    )
+    parser.add_argument(
+        "--row_window",
+        "--row-window",
+        "--row.window",
+        type=int,
+        default=4,
+    )
+    parser.add_argument(
+        "--row_num_random",
+        "--row-num-random",
+        "--row.num.random",
+        type=int,
+        default=0,
+    )
     parser.add_argument(
         "--row_group_mode",
+        "--row-group-mode",
+        "--row.group.mode",
         type=str,
         default="contiguous",
         choices=["contiguous", "pma"],
@@ -120,9 +139,21 @@ def build_parser():
     )
 
     # Perceiver memory
-    parser.add_argument("--perc_num_latents", type=int, default=16)
-    parser.add_argument("--perc_layers", type=int, default=2)
-    
+    parser.add_argument(
+        "--perc_num_latents",
+        "--perc-num-latents",
+        "--perc.num.latents",
+        type=int,
+        default=16,
+    )
+    parser.add_argument(
+        "--perc_layers",
+        "--perc-layers",
+        "--perc.layers",
+        type=int,
+        default=2,
+    )
+
     # ICL
     parser.add_argument("--icl_num_blocks", type=int, default=12)
     parser.add_argument("--icl_nhead", type=int, default=4)
