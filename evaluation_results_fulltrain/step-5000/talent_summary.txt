@@ -1,5 +1,0 @@
-Model: step-5000
-Total datasets: 149
-Average accuracy: 0.602232
-Total time s: 1599.289
-Average time s: 10.733

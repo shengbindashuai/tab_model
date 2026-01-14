@@ -111,7 +111,7 @@
 # Generate prior datasets on the fly
 # ----------------------------------
 
-torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-MSP-main/src/orion_msp/train/run.py \
+torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-tabicl/src/orion_msp/train/run.py \
             --wandb_log True \
             --wandb_project TabICL \
             --wandb_name ldm \

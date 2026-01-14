@@ -1,5 +1,0 @@
-Model: step-14450
-Total datasets: 149
-Average accuracy: 0.577433
-Total time s: 1600.960
-Average time s: 10.745
