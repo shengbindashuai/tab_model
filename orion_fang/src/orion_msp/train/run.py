@@ -472,46 +472,8 @@ class Trainer:
 
 
 if __name__ == "__main__":
-    import sys
-
-
-    def _normalize_argv(argv: list[str]) -> list[str]:
-        """Normalize common copy/paste and launcher quirks in CLI flags.
-
-        - Converts Unicode dashes (–, —, −) to ASCII '-' and ensures long options
-          start with '--'.
-        - Converts single-dash long options like '-row_scales' to '--row_scales'.
-        """
-
-        unicode_dash_to_ascii = {
-            "–": "-",  # en dash
-            "—": "-",  # em dash
-            "−": "-",  # minus sign
-        }
-
-        out: list[str] = []
-        for arg in argv:
-            if not arg:
-                out.append(arg)
-                continue
-
-            # Replace leading unicode dashes with ASCII '-'
-            first = arg[0]
-            if first in unicode_dash_to_ascii:
-                arg = unicode_dash_to_ascii[first] + arg[1:]
-
-            # Promote single-dash long options to double-dash (avoid touching
-            # short options like '-h' and numeric negatives like '-1').
-            if arg.startswith("-") and not arg.startswith("--"):
-                if len(arg) > 2 and arg[1].isalpha():
-                    arg = "--" + arg[1:]
-
-            out.append(arg)
-        return out
-
-
+    print("=======================================================================================================================")
     parser = build_parser()
-    sys.argv = _normalize_argv(sys.argv)
     cfg = parser.parse_args()
     trainer = Trainer(cfg)
     trainer.train()
