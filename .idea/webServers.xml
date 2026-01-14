@@ -9,6 +9,13 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="0673d17c-7656-45ee-a0ff-65fb307c6549" name="238">
+        <fileTransfer rootFolder="/data0/hjx2024/nsb2025/tab_model" accessType="SFTP" host="10.21.76.238" port="22" sshConfigId="f5fb5cd5-5f86-4742-9697-07ad422a27e9" sshConfig="hjx2024@10.21.76.238:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
