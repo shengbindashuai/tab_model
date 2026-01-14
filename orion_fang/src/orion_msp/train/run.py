@@ -24,7 +24,7 @@ from orion_msp.model.orion_msp import OrionMSP
 from orion_msp.prior.dataset import PriorDataset
 from orion_msp.prior.genload import LoadPriorDataset
 from orion_msp.train.optim import get_scheduler
-from train_config import build_parser
+from orion_msp.train.train_config import build_parser
 
 
 class Timer:
