@@ -154,7 +154,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --ff_factor 2 \
             --norm_first True \
             --checkpoint_dir ./tab/stage2/checkpoint/dir \
-            --checkpoint_path ./tab/stage1/checkpoint/dir/step-{latest}.ckpt \
+            --checkpoint_path ./tab/stage1/checkpoint/dir/step-5000.ckpt \
             --save_temp_every 5 \
             --save_perm_every 100 \
             --only_load_model True
