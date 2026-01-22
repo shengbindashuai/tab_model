@@ -122,7 +122,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --torch_seed 42 \
             --max_steps 2000 \
             --batch_size 512 \
-            --micro_batch_size 4 \
+            --micro_batch_size 2 \
             --lr 2e-5 \
             --scheduler polynomial_decay_warmup \
             --warmup_proportion 0 \
