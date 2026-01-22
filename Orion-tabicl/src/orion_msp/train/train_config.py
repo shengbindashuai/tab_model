@@ -221,16 +221,16 @@ def build_parser():
     parser.add_argument(
         "--cosine_num_cycles",
         type=int,
-        default=1,
+        default=5,
         help="Number of hard restarts for cosine schedule. Only used when scheduler is cosine_with_restarts",
     )
     parser.add_argument(
         "--cosine_amplitude_decay",
         type=float,
-        default=1.0,
+        default=0.8,
         help="Amplitude scaling factor per cycle. Only used when scheduler is cosine_with_restarts",
     )
-    parser.add_argument("--cosine_lr_end", type=float, default=0, help="Final learning rate for cosine_with_restarts")
+    parser.add_argument("--cosine_lr_end", type=float, default=2e-5, help="Final learning rate for cosine_with_restarts")
     parser.add_argument(
         "--poly_decay_lr_end", type=float, default=1e-7, help="Final learning rate for polynomial decay scheduler"
     )

@@ -114,7 +114,7 @@
 torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/zijian.li/dmir_crl/tab_model/Orion-tabicl/src/orion_msp/train/run.py \
             --wandb_log True \
             --wandb_project TabICL \
-            --wandb_name ldm \
+            --wandb_name tab_s1_1 \
             --wandb_dir ./wandb/dir \
             --wandb_mode offline \
             --device cuda \
@@ -149,7 +149,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --icl_nhead 4 \
             --ff_factor 2 \
             --norm_first True \
-            --checkpoint_dir ./tab/stage1_t2/checkpoint/dir \
+            --checkpoint_dir ./tab/stage1_t3/checkpoint/dir \
             --save_temp_every 50 \
             --save_perm_every 5000
 
