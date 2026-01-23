@@ -128,6 +128,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --lr 2e-5 \
             --scheduler cosine_with_restarts \
             --warmup_proportion 0.02 \
+            --cosine_num_cycles 5 \
             --gradient_clipping 1.0 \
             --prior_type mix_scm \
             --prior_device cpu \

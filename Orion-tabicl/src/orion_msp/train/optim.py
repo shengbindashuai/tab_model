@@ -24,7 +24,7 @@ def _get_cosine_with_restarts_lr_lambda(
     num_cycles: int,
     amplitude_decay: float,
     lr_end: float = 0.0,
-    lr_init: float = 1e-4,
+    lr_init: float = 1,
 ):
     """
     Compute the learning rate factor for a cosine schedule with warmup, hard restarts, and amplitude scaling.

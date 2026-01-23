@@ -350,7 +350,7 @@ def build_parser():
     parser.add_argument(
         "--max_checkpoints",
         type=int,
-        default=-1,
+        default=20,
         help="Maximum number of temporary checkpoints to keep. Permanent checkpoints are not counted.",
     )
     parser.add_argument("--checkpoint_path", default=None, type=str, help="Path to specific checkpoint file to load")
