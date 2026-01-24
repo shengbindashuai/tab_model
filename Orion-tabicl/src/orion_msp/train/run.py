@@ -200,7 +200,7 @@ class Trainer:
     def configure_optimizer(self):
         from torch import optim
         self.optimizer = optim.AdamW(self.raw_model.parameters(), lr=self.config.lr, weight_decay=self.config.weight_decay)
-        self.scheduler = get_scheduler(config=self.config, optimizer=self.optimizer)
+        self.scheduler= get_scheduler(config=self.config, optimizer=self.optimizer)
 
     def configure_amp(self):
         self.amp = self.config.amp and "cuda" in self.config.device
