@@ -12,7 +12,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --wandb_log True \
             --wandb_project TabICL \
             --wandb_name ldm_s1_2 \
-            --wandb_dir ./wandb/dir/wandb/offline-run-20260124_060416-inlfyc74/ \
+            --wandb_dir ./wandb/dir \
             --wandb_id inlfyc74 \
             --wandb_mode offline \
             --device cuda \
