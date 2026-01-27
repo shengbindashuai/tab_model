@@ -396,6 +396,7 @@ def parse_args():
                     help="包含多个 *.ckpt 的目录；将按文件名排序依次评测")
     ap.add_argument("--data_root", type=str, default=DEFAULT_DATA_ROOT)
     ap.add_argument("--outdir", type=str, default=DEFAULT_OUTDIR)
+    ap.add_argument("--step", type=int, default=50)
     return ap.parse_args()
 
 def main():
@@ -429,7 +430,7 @@ def main():
             nums = re.findall(r"\d+", p.stem)
             if nums:
                 step = int(nums[-1])
-                if step % 50 == 0:  # 每 50 step
+                if step % args.step == 0:  # 每 50 step
                     filtered.append(p)
             else:
                 # 没有数字的模型也可以保留（可选）
