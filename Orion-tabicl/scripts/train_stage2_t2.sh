@@ -6,7 +6,7 @@ torchrun --standalone --nproc_per_node=8 /vast/users/guangyi.chen/causal_group/z
             --wandb_dir ./wandb/dir \
             --wandb_mode offline \
             --device cuda \
-            --dtype float32 \
+            --dtype float16 \
             --np_seed 42 \
             --torch_seed 42 \
             --max_steps 2000 \
